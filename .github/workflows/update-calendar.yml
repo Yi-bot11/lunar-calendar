@@ -1,1 +1,51 @@
-name: placeholder
+name: Update Lunar Calendar
+
+on:
+  schedule:
+    # 每月1号北京时间上午8点左右运行
+    - cron: "0 0 1 * *"
+
+  workflow_dispatch:
+
+
+permissions:
+  contents: write
+
+
+jobs:
+  generate-calendar:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+
+      - name: Generate calendar
+        run: |
+          python generate_calendar.py
+
+
+      - name: Commit calendar update
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+          git add docs/lunar.ics
+
+          git diff --cached --quiet || git commit -m "Update lunar calendar"
+
+          git push
