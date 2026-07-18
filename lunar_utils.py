@@ -57,11 +57,17 @@ def get_tao_events(current):
 
     events = []
 
-    for festival in festivals:
-        events.append({
-            "date": current,
-            "title": f"☯ {festival['name']}"
-        })
+for festival in festivals:
+    print(
+        "发现道教节日:",
+        current,
+        festival["name"]
+    )
+
+    events.append({
+        "date": current,
+        "title": f"☯ {festival['name']}"
+    })
 
     return events
 def generate_lunar_dates(start_year, end_year):
