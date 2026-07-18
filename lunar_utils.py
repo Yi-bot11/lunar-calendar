@@ -1,6 +1,6 @@
 from lunar_python import Solar
 from datetime import date
-
+from tao_festivals import TAO_FESTIVALS
 
 def get_lunar_day(year, month, day):
     """
@@ -39,11 +39,34 @@ def lunar_title(year, month, day):
         return f"🌕 农历{info['month_name']}月十五"
 
     return "农历日期"
+    
+def get_tao_events(current):
+    """
+    获取当天的道教节日事件
+    """
+    info = get_lunar_day(
+        current.year,
+        current.month,
+        current.day
+    )
 
+    festivals = TAO_FESTIVALS.get(
+        (info["month"], info["day"]),
+        []
+    )
 
+    events = []
+
+    for festival in festivals:
+        events.append({
+            "date": current,
+            "title": f"☯ {festival['name']}"
+        })
+
+    return events
 def generate_lunar_dates(start_year, end_year):
     """
-    生成指定年份范围内所有农历初一和十五
+    生成指定年份范围内所有农历初一、十五和道教节日
     """
 
     results = []
@@ -58,6 +81,7 @@ def generate_lunar_dates(start_year, end_year):
                 try:
                     current = date(year, month, day)
 
+                    # 初一、十五
                     if is_lunar_first_or_fifteenth(
                         current.year,
                         current.month,
@@ -74,7 +98,11 @@ def generate_lunar_dates(start_year, end_year):
                             }
                         )
 
+                    # 道教节日（每天都检查）
+                    results.extend(get_tao_events(current))
+
                 except ValueError:
                     continue
 
     return results
+
