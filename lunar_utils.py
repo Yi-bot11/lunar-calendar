@@ -52,7 +52,7 @@ def get_tao_events(current, info):
     "date": current,
     "title": f"☯ {festival['name']}",
     "description": festival.get("description", ""),
-    "category": "tao"
+    "category": "道教"
 }
 
     return events
