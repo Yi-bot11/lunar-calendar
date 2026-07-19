@@ -9,6 +9,8 @@ def escape_text(text):
     """
     转义 ICS 特殊字符
     """
+    text = str(text or "")
+
     return (
         text.replace("\\", "\\\\")
             .replace(";", "\\;")
@@ -41,7 +43,8 @@ DTSTAMP:{now}
 DTSTART;VALUE=DATE:{date_string}
 DTEND;VALUE=DATE:{(event_date + timedelta(days=1)).strftime("%Y%m%d")}
 SUMMARY:{escape_text(title)}
-DESCRIPTION:{escape_text(title)}
+DESCRIPTION:{escape_text(description or title)}
+CATEGORIES:{escape_text(category)}
 BEGIN:VALARM
 TRIGGER:-PT9H
 ACTION:DISPLAY
@@ -70,11 +73,13 @@ def create_calendar(events):
 
     for index, event in enumerate(events):
         calendar.append(
-            create_event(
-                uid=f"lunar-{index}@yi-bot11",
-                event_date=event["date"],
-                title=event["title"]
-            )
+create_event(
+    uid=f"lunar-{index}@yi-bot11",
+    event_date=event["date"],
+    title=event["title"],
+    description=event.get("description", ""),
+    category=event.get("category", "")
+)
         )
         calendar.append("")
 
