@@ -54,3 +54,39 @@ def get_tao_events(current, info):
         })
 
     return events
+def generate_lunar_dates(start_year, end_year):
+    """
+    生成指定年份范围内所有农历初一、十五和道教节日
+    """
+    results = []
+
+    for year in range(start_year, end_year + 1):
+        for month in range(1, 13):
+            for day in range(1, 32):
+
+                try:
+                    current = date(year, month, day)
+
+                    # 只计算一次农历信息
+                    info = get_lunar_day(
+                        current.year,
+                        current.month,
+                        current.day
+                    )
+
+                    # 初一、十五
+                    if info["day"] in (1, 15):
+                        results.append({
+                            "date": current,
+                            "title": lunar_title(info)
+                        })
+
+                    # 道教节日
+                    results.extend(
+                        get_tao_events(current, info)
+                    )
+
+                except ValueError:
+                    continue
+
+    return results
