@@ -5,8 +5,8 @@ from lunar_utils import generate_lunar_dates
 from ics_writer import save_calendar
 
 
-START_YEAR = datetime.now().year
-END_YEAR = START_YEAR + 10
+START_YEAR = datetime.now().year - 1
+END_YEAR = datetime.now().year + 10
 
 OUTPUT_FILE = "docs/lunar.ics"
 
