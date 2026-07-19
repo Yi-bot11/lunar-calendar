@@ -26,12 +26,10 @@ def is_lunar_first_or_fifteenth(year, month, day):
     return info["day"] in (1, 15)
 
 
-def lunar_title(year, month, day):
+def lunar_title(info):
     """
-    生成日历事件标题
+    根据农历信息生成标题
     """
-    info = get_lunar_day(year, month, day)
-
     if info["day"] == 1:
         return f"🌑 农历{info['month_name']}月初一"
 
@@ -40,12 +38,7 @@ def lunar_title(year, month, day):
 
     return "农历日期"
     
-def get_tao_events(current):
-    info = get_lunar_day(
-        current.year,
-        current.month,
-        current.day
-    )
+def get_tao_events(current, info):
 
     festivals = TAO_FESTIVALS.get(
         (info["month"], info["day"]),
@@ -55,12 +48,6 @@ def get_tao_events(current):
     events = []
 
     for festival in festivals:
-        print(
-            "发现道教节日:",
-            current,
-            festival["name"]
-        )
-
         events.append({
             "date": current,
             "title": f"☯ {festival['name']}"
