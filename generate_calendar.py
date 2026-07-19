@@ -8,7 +8,8 @@ from ics_writer import save_calendar
 START_YEAR = datetime.now().year - 1
 END_YEAR = datetime.now().year + 10
 
-OUTPUT_FILE = "docs/lunar.ics"
+OUTPUT_DIR = "docs"
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "lunar.ics")
 
 
 def main():
