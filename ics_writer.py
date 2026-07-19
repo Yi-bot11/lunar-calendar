@@ -17,7 +17,13 @@ def escape_text(text):
     )
 
 
-def create_event(uid, event_date, title):
+def create_event(
+    uid,
+    event_date,
+    title,
+    description="",
+    category=""
+):
     """
     创建一个全天 ICS 事件
     """
