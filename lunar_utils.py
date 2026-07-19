@@ -41,9 +41,6 @@ def lunar_title(year, month, day):
     return "农历日期"
     
 def get_tao_events(current):
-    """
-    获取当天的道教节日事件
-    """
     info = get_lunar_day(
         current.year,
         current.month,
@@ -57,58 +54,16 @@ def get_tao_events(current):
 
     events = []
 
-for festival in festivals:
-    print(
-        "发现道教节日:",
-        current,
-        festival["name"]
-    )
+    for festival in festivals:
+        print(
+            "发现道教节日:",
+            current,
+            festival["name"]
+        )
 
-    events.append({
-        "date": current,
-        "title": f"☯ {festival['name']}"
-    })
+        events.append({
+            "date": current,
+            "title": f"☯ {festival['name']}"
+        })
 
     return events
-def generate_lunar_dates(start_year, end_year):
-    """
-    生成指定年份范围内所有农历初一、十五和道教节日
-    """
-
-    results = []
-
-    for year in range(start_year, end_year + 1):
-
-        for month in range(1, 13):
-
-            # 遍历每个月所有可能日期
-            for day in range(1, 32):
-
-                try:
-                    current = date(year, month, day)
-
-                    # 初一、十五
-                    if is_lunar_first_or_fifteenth(
-                        current.year,
-                        current.month,
-                        current.day
-                    ):
-                        results.append(
-                            {
-                                "date": current,
-                                "title": lunar_title(
-                                    current.year,
-                                    current.month,
-                                    current.day
-                                ),
-                            }
-                        )
-
-                    # 道教节日（每天都检查）
-                    results.extend(get_tao_events(current))
-
-                except ValueError:
-                    continue
-
-    return results
-
