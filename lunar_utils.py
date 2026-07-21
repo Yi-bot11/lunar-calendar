@@ -60,7 +60,6 @@ for festival in festivals:
 
 return events
 
-    return events
 def generate_lunar_dates(start_year, end_year):
     """
     生成指定年份范围内所有农历初一、十五和道教节日
