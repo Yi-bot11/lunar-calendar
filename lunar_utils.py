@@ -45,9 +45,6 @@ def get_tao_events(current, info):
         []
     )
 
-    events = []
-
-    for festival in festivals:
 events = []
 
 for festival in festivals:
